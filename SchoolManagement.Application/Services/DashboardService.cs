@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using SchoolManagement.Application.Common.Models;
 
 namespace SchoolManagement.Application.Services
 {
@@ -19,7 +20,7 @@ namespace SchoolManagement.Application.Services
             _context = context;
         }
 
-        public async Task<DashboardSummaryResponse>GetSummaryAsync()
+        public async Task<ApiResponse<DashboardSummaryResponse>> GetSummaryAsync()
         {
             var today = DateTime.UtcNow.Date;
 
@@ -27,7 +28,7 @@ namespace SchoolManagement.Application.Services
 
             var currentYear = today.Year;
 
-            return new DashboardSummaryResponse
+            var result = new DashboardSummaryResponse
             {
                 TotalStudents =
                     await _context.Students
@@ -80,6 +81,8 @@ namespace SchoolManagement.Application.Services
                 PendingFeeStudents =
                     await GetPendingFeeStudentsAsync()
             };
+
+            return ApiResponse<DashboardSummaryResponse>.SuccessResponse(result);
         }
 
         #region Private Methods

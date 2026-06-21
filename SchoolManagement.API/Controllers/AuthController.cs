@@ -1,12 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SchoolManagement.Application.Common.Exceptions;
 using SchoolManagement.Application.DTOs.Auth;
-using SchoolManagement.Application.DTOs.Module;
-using SchoolManagement.Application.DTOs.Permission;
-using SchoolManagement.Application.DTOs.RolePermission;
 using SchoolManagement.Application.Interfaces;
-using SchoolManagement.Application.Services;
 
 namespace SchoolManagement.API.Controllers
 {

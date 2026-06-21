@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SchoolManagement.Application.Common.Models;
 using SchoolManagement.Application.DTOs.FeeCollection;
 using SchoolManagement.Application.DTOs.FeeStructure;
 using SchoolManagement.Application.Interfaces;
@@ -21,31 +22,31 @@ namespace SchoolManagement.API.Controllers
         }
 
         [HttpPost("structure")]
-        public async Task<IActionResult> CreateFeeStructure(
-            CreateFeeStructureRequest request)
+        public async Task<IActionResult> CreateFeeStructure(CreateFeeStructureRequest request)
         {
-            await _feeService
-                .CreateFeeStructureAsync(request);
+            await _feeService.CreateFeeStructureAsync(request);
 
-            return Ok("Fee structure created.");
+            return Ok(
+                ApiResponse<string>
+                    .SuccessResponse(
+                        "Fee structure created."));
         }
 
         [HttpPost("collect")]
-        public async Task<IActionResult> CollectFee(
-            CreateFeeCollectionRequest request)
+        public async Task<IActionResult> CollectFee(CreateFeeCollectionRequest request)
         {
-            await _feeService
-                .CollectFeeAsync(request);
+            await _feeService.CollectFeeAsync(request);
 
-            return Ok("Fee collected successfully.");
+            return Ok(
+                ApiResponse<string>
+                    .SuccessResponse(
+                        "Fee collected successfully."));
         }
 
         [HttpGet("student-history/{studentId}")]
         public async Task<IActionResult> GetStudentHistory(Guid studentId)
         {
-            var result =
-                await _feeService
-                    .GetStudentFeeHistoryAsync(studentId);
+            var result = await _feeService.GetStudentFeeHistoryAsync(studentId);
 
             return Ok(result);
         }
@@ -53,9 +54,7 @@ namespace SchoolManagement.API.Controllers
         [HttpGet("due/{studentId}")]
         public async Task<IActionResult> GetDue(Guid studentId)
         {
-            var result =
-                await _feeService
-                    .GetStudentDueAsync(studentId);
+            var result = await _feeService.GetStudentDueAsync(studentId);
 
             return Ok(result);
         }
