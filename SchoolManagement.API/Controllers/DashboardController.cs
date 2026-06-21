@@ -18,12 +18,9 @@ namespace SchoolManagement.API.Controllers
         }
 
         [HttpGet("summary")]
-        public async Task<IActionResult>
-            GetSummary()
+        public async Task<IActionResult>GetSummary()
         {
-            var response =
-                await _dashboardService
-                    .GetSummaryAsync();
+            var response = await _dashboardService.GetSummaryAsync();
 
             return Ok(response);
         }

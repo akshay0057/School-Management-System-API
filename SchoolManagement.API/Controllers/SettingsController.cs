@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SchoolManagement.Application.Common.Models;
 using SchoolManagement.Application.Constants;
 using SchoolManagement.Application.DTOs.Master;
 using SchoolManagement.Application.DTOs.Module;
@@ -26,7 +27,10 @@ namespace SchoolManagement.API.Controllers
         {
             await _settingService.CreateRoleAsync(request);
 
-            return Ok("Role created successfully.");
+            return Ok(
+                ApiResponse<string>
+                    .SuccessResponse(
+                        "Role created successfully."));
         }
 
         [HttpPost("academic-session")]
@@ -34,7 +38,10 @@ namespace SchoolManagement.API.Controllers
         {
             await _settingService.CreateAcademicSessionAsync(request);
 
-            return Ok("Academic Session created successfully.");
+            return Ok(
+                ApiResponse<string>
+                    .SuccessResponse(
+                        "Academic Session created successfully."));
         }
 
         [HttpPost("class")]
@@ -42,7 +49,10 @@ namespace SchoolManagement.API.Controllers
         {
             await _settingService.CreateClassAsync(request);
 
-            return Ok("Class created successfully.");
+            return Ok(
+                ApiResponse<string>
+                    .SuccessResponse(
+                        "Class created successfully."));
         }
 
         [HttpPost("section")]
@@ -50,7 +60,10 @@ namespace SchoolManagement.API.Controllers
         {
             await _settingService.CreateSectionAsync(request);
 
-            return Ok("Section created successfully.");
+            return Ok(
+                ApiResponse<string>
+                    .SuccessResponse(
+                        "Section created successfully."));
         }
 
         [HttpPost("module")]
@@ -58,7 +71,10 @@ namespace SchoolManagement.API.Controllers
         {
             await _settingService.CreateModuleAsync(request);
 
-            return Ok("Module created successfully.");
+            return Ok(
+                ApiResponse<string>
+                    .SuccessResponse(
+                        "Module created successfully."));
         }
 
         [HttpPost("permission")]
@@ -67,7 +83,10 @@ namespace SchoolManagement.API.Controllers
         {
             await _settingService.CreatePermissionAsync(request);
 
-            return Ok("Permission created successfully.");
+            return Ok(
+                ApiResponse<string>
+                    .SuccessResponse(
+                        "Permission created successfully."));
         }
 
         [HttpPost("role-permissions")]
@@ -76,7 +95,10 @@ namespace SchoolManagement.API.Controllers
         {
             await _settingService.AssignPermissionsAsync(request);
 
-            return Ok("Permissions assigned successfully.");
+            return Ok(
+                ApiResponse<string>
+                    .SuccessResponse(
+                        "Assign permissions successfully."));
         }
 
         [HttpGet("menu")]
@@ -85,9 +107,9 @@ namespace SchoolManagement.API.Controllers
         {
             var userId = Guid.Parse(User.FindFirst(ClaimConstants.UserId)!.Value);
 
-            var menu = await _settingService.GetUserMenuAsync(userId);
+            var response = await _settingService.GetUserMenuAsync(userId);
 
-            return Ok(menu);
+            return Ok(response);
         }
 
         [HttpGet("permission-matrix")]

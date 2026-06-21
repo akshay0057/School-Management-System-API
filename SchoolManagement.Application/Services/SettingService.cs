@@ -1,4 +1,5 @@
-﻿using SchoolManagement.Application.DTOs.Master;
+﻿using SchoolManagement.Application.Common.Models;
+using SchoolManagement.Application.DTOs.Master;
 using SchoolManagement.Application.DTOs.Menu;
 using SchoolManagement.Application.DTOs.Module;
 using SchoolManagement.Application.DTOs.Permission;
@@ -181,7 +182,7 @@ namespace SchoolManagement.Application.Services
                 .SaveChangesAsync();
         }
 
-        public async Task<List<PermissionMatrixResponse>>GetPermissionMatrixAsync()
+        public async Task<ApiResponse<List<PermissionMatrixResponse>>> GetPermissionMatrixAsync()
         {
             var roles =
                 await _roleRepository
@@ -191,7 +192,7 @@ namespace SchoolManagement.Application.Services
                 await _permissionRepository
                     .GetAllAsync();
 
-            return roles.Select(role =>
+            var result = roles.Select(role =>
                 new PermissionMatrixResponse
                 {
                     RoleId = role.Id,
@@ -221,15 +222,17 @@ namespace SchoolManagement.Application.Services
                             .ToList()
                 })
                 .ToList();
+
+            return ApiResponse<List<PermissionMatrixResponse>>.SuccessResponse(result);
         }
 
-        public async Task<List<MenuTreeResponse>>GetMenuTreeAsync()
+        public async Task<ApiResponse<List<MenuTreeResponse>>> GetMenuTreeAsync()
         {
             var modules =
                 await _moduleRepository
                     .GetMenuModulesAsync();
 
-            return modules
+            var result = modules
 
                 .Where(x =>
                     x.ParentModuleId == null)
@@ -237,6 +240,8 @@ namespace SchoolManagement.Application.Services
                 .Select(BuildMenuTree)
 
                 .ToList();
+
+            return ApiResponse<List<MenuTreeResponse>>.SuccessResponse(result);
         }
 
         public async Task SavePermissionMatrixAsync(SavePermissionMatrixRequest request)
@@ -275,7 +280,7 @@ namespace SchoolManagement.Application.Services
                 .SaveChangesAsync();
         }
 
-        public async Task<List<UserMenuResponse>>GetUserMenuAsync(Guid userId)
+        public async Task<ApiResponse<List<UserMenuResponse>>> GetUserMenuAsync(Guid userId)
         {
             var user =
                 await _userRepository
@@ -283,7 +288,7 @@ namespace SchoolManagement.Application.Services
                         userId);
 
             if (user is null)
-                return [];
+                return ApiResponse<List<UserMenuResponse>>.FailureResponse("User not found.");
 
             var modules = user.UserRoles!
 
@@ -307,12 +312,14 @@ namespace SchoolManagement.Application.Services
 
                 .ToList();
 
-            return rootModules
+            var result = rootModules
                 .Select(x =>
                     BuildUserMenuTree(
                         x,
                         modules))
                 .ToList();
+
+            return ApiResponse<List<UserMenuResponse>>.SuccessResponse(result);
         }
 
         #region Private Methods

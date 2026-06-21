@@ -1,13 +1,9 @@
-﻿using SchoolManagement.Application.DTOs.FeeCollection;
+﻿using SchoolManagement.Application.Common.Models;
+using SchoolManagement.Application.DTOs.FeeCollection;
 using SchoolManagement.Application.DTOs.FeeStructure;
 using SchoolManagement.Application.Interfaces;
 using SchoolManagement.Domain.Entities.FeeModule;
 using SchoolManagement.Infrastructure.Persistence.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SchoolManagement.Application.Services
 {
@@ -27,8 +23,7 @@ namespace SchoolManagement.Application.Services
             _studentRepository = studentRepository;
         }
 
-        public async Task CreateFeeStructureAsync(
-            CreateFeeStructureRequest request)
+        public async Task CreateFeeStructureAsync(CreateFeeStructureRequest request)
         {
             var feeStructure =
                 new FeeStructureEntity
@@ -53,8 +48,7 @@ namespace SchoolManagement.Application.Services
                 .SaveChangesAsync();
         }
 
-        public async Task CollectFeeAsync(
-            CreateFeeCollectionRequest request)
+        public async Task CollectFeeAsync(CreateFeeCollectionRequest request)
         {
             var alreadyCollected =
                 await _feeCollectionRepository
@@ -98,7 +92,7 @@ namespace SchoolManagement.Application.Services
                 .SaveChangesAsync();
         }
 
-        public async Task<StudentFeeHistoryResponse>GetStudentFeeHistoryAsync(Guid studentId)
+        public async Task<ApiResponse<StudentFeeHistoryResponse>> GetStudentFeeHistoryAsync(Guid studentId)
         {
             var student =
                 await _studentRepository
@@ -111,7 +105,7 @@ namespace SchoolManagement.Application.Services
                 await _feeCollectionRepository
                     .GetByStudentIdAsync(studentId);
 
-            return new StudentFeeHistoryResponse
+            var result = new StudentFeeHistoryResponse
             {
                 StudentId = student.Id,
 
@@ -132,9 +126,11 @@ namespace SchoolManagement.Application.Services
                         ReceiptNo = x.ReceiptNo
                     }).ToList()
             };
+
+            return ApiResponse<StudentFeeHistoryResponse>.SuccessResponse(result);
         }
 
-        public async Task<FeeDueResponse>GetStudentDueAsync(Guid studentId)
+        public async Task<ApiResponse<FeeDueResponse>> GetStudentDueAsync(Guid studentId)
         {
             var student =
                 await _studentRepository
@@ -177,27 +173,27 @@ namespace SchoolManagement.Application.Services
                 pendingMonths *
                 feeStructure.MonthlyFee;
 
-            return new FeeDueResponse
+            var result = new FeeDueResponse
             {
                 StudentId = student.Id,
 
-                StudentName =
-                    $"{student.FirstName} {student.LastName}",
+                StudentName = $"{student.FirstName} {student.LastName}",
 
-                MonthlyFee =
-                    feeStructure.MonthlyFee,
+                MonthlyFee = feeStructure.MonthlyFee,
 
-                PendingMonths =
-                    pendingMonths,
+                PendingMonths = pendingMonths,
 
-                TotalDue =
-                    totalDue
+                TotalDue = totalDue
             };
+
+            return ApiResponse<FeeDueResponse>.SuccessResponse(result);
         }
 
+        #region Private Methods
         private string GenerateReceiptNo()
         {
             return $"RCPT-{DateTime.UtcNow:yyyyMMddHHmmss}";
         }
+        #endregion
     }
 }

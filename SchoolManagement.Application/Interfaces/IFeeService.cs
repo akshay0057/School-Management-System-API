@@ -1,4 +1,5 @@
-﻿using SchoolManagement.Application.DTOs.FeeCollection;
+﻿using SchoolManagement.Application.Common.Models;
+using SchoolManagement.Application.DTOs.FeeCollection;
 using SchoolManagement.Application.DTOs.FeeStructure;
 using System;
 using System.Collections.Generic;
@@ -11,11 +12,8 @@ namespace SchoolManagement.Application.Interfaces
     public interface IFeeService
     {
         Task CreateFeeStructureAsync(CreateFeeStructureRequest request);
-
         Task CollectFeeAsync(CreateFeeCollectionRequest request);
-
-        Task<StudentFeeHistoryResponse>GetStudentFeeHistoryAsync(Guid studentId);
-
-        Task<FeeDueResponse>GetStudentDueAsync(Guid studentId);
+        Task<ApiResponse<StudentFeeHistoryResponse>>GetStudentFeeHistoryAsync(Guid studentId);
+        Task<ApiResponse<FeeDueResponse>>GetStudentDueAsync(Guid studentId);
     }
 }
