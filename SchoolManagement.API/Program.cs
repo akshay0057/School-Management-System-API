@@ -28,6 +28,7 @@ builder.Services.AddScoped<IStaffService, StaffService>();
 builder.Services.AddScoped<IAttendanceService, AttendanceService>();
 builder.Services.AddScoped<IFeeService, FeeService>();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
+builder.Services.AddScoped<ISettingService, SettingService>();
 
 // Repositories
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
@@ -42,6 +43,9 @@ builder.Services.AddScoped<IStudentAttendanceRepository, StudentAttendanceReposi
 builder.Services.AddScoped<IStaffAttendanceRepository, StaffAttendanceRepository>();
 builder.Services.AddScoped<IFeeStructureRepository, FeeStructureRepository>();
 builder.Services.AddScoped<IFeeCollectionRepository, FeeCollectionRepository>();
+builder.Services.AddScoped<IModuleRepository, ModuleRepository>();
+builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
+builder.Services.AddScoped<IRolePermissionRepository, RolePermissionRepository>();
 
 #region Database
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
