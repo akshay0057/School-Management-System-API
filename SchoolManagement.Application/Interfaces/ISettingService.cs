@@ -1,4 +1,5 @@
-﻿using SchoolManagement.Application.DTOs.Master;
+﻿using SchoolManagement.Application.Common.Models;
+using SchoolManagement.Application.DTOs.Master;
 using SchoolManagement.Application.DTOs.Menu;
 using SchoolManagement.Application.DTOs.Module;
 using SchoolManagement.Application.DTOs.Permission;
@@ -15,9 +16,9 @@ namespace SchoolManagement.Application.Interfaces
         Task CreateModuleAsync(CreateModuleRequest request);
         Task CreatePermissionAsync(CreatePermissionRequest request);
         Task AssignPermissionsAsync(AssignRolePermissionRequest request);
-        Task<List<UserMenuResponse>> GetUserMenuAsync(Guid userId);
-        Task<List<PermissionMatrixResponse>>GetPermissionMatrixAsync();
-        Task<List<MenuTreeResponse>>GetMenuTreeAsync();
+        Task<ApiResponse<List<UserMenuResponse>>> GetUserMenuAsync(Guid userId);
+        Task<ApiResponse<List<PermissionMatrixResponse>>>GetPermissionMatrixAsync();
+        Task<ApiResponse<List<MenuTreeResponse>>>GetMenuTreeAsync();
         Task SavePermissionMatrixAsync(SavePermissionMatrixRequest request);
     }
 }
