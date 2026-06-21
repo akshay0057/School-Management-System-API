@@ -21,7 +21,14 @@ namespace SchoolManagement.Application.Services
         private readonly IModuleRepository _moduleRepository;
         private readonly IPermissionRepository _permissionRepository;
         private readonly IRolePermissionRepository _rolePermissionRepository;
-        public SettingService(IUserRepository userRepository, IRoleRepository roleRepository, IAcademicSessionRepository academicSessionRepository, IClassRepository classRepository, ISectionRepository sectionRepository, IModuleRepository moduleRepository, IPermissionRepository permissionRepository, IRolePermissionRepository rolePermissionRepository)
+        public SettingService(IUserRepository userRepository, 
+            IRoleRepository roleRepository, 
+            IAcademicSessionRepository academicSessionRepository, 
+            IClassRepository classRepository, 
+            ISectionRepository sectionRepository, 
+            IModuleRepository moduleRepository, 
+            IPermissionRepository permissionRepository, 
+            IRolePermissionRepository rolePermissionRepository)
         {
             _userRepository = userRepository;
             _roleRepository = roleRepository;

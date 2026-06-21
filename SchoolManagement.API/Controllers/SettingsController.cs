@@ -78,7 +78,6 @@ namespace SchoolManagement.API.Controllers
         }
 
         [HttpPost("permission")]
-        [Authorize]
         public async Task<IActionResult> CreatePermission(CreatePermissionRequest request)
         {
             await _settingService.CreatePermissionAsync(request);
@@ -90,7 +89,6 @@ namespace SchoolManagement.API.Controllers
         }
 
         [HttpPost("role-permissions")]
-        [Authorize]
         public async Task<IActionResult> AssignPermissions(AssignRolePermissionRequest request)
         {
             await _settingService.AssignPermissionsAsync(request);
@@ -102,7 +100,6 @@ namespace SchoolManagement.API.Controllers
         }
 
         [HttpGet("menu")]
-        [Authorize]
         public async Task<IActionResult> GetMenu()
         {
             var userId = Guid.Parse(User.FindFirst(ClaimConstants.UserId)!.Value);
