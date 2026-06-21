@@ -1,4 +1,5 @@
-﻿using SchoolManagement.Application.DTOs.Dashboard;
+﻿using SchoolManagement.Application.Common.Models;
+using SchoolManagement.Application.DTOs.Dashboard;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace SchoolManagement.Application.Interfaces
 {
     public interface IDashboardService
     {
-        Task<DashboardSummaryResponse> GetSummaryAsync();
+        Task<ApiResponse<DashboardSummaryResponse>> GetSummaryAsync();
     }
 }
